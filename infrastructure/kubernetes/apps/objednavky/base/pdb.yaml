@@ -1,0 +1,11 @@
+# Při údržbě smí najednou chybět nanejvýš jedna kopie služby objednávky
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: objednavky
+  namespace: objednavky
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: objednavky

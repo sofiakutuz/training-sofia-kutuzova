@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: objednavky
+spec:
+  selector:
+    app: objednavky
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
