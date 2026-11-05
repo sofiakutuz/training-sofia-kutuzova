@@ -1,0 +1,29 @@
+name: objednavky
+
+services:
+  objednavky:
+    build: .
+    image: objednavky:1.1
+    ports:
+      - "18080:8080"
+    env_file: .env
+    environment:
+      SKLAD_URL: http://sklad:9898
+    volumes:
+      - objednavky-data:/data
+    depends_on:
+      sklad:
+        condition: service_healthy
+
+
+  sklad:
+    image: ghcr.io/stefanprodan/podinfo:6.15.0
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9898/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  objednavky-data:
+
